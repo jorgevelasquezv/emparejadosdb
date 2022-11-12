@@ -161,7 +161,6 @@ public class GUI extends Application {
                     break;
             }
             secondWindow(primaryStage);
-            System.out.println("Filas: " + rows + " Columnas: " + columns);
         };
     }
 
@@ -189,7 +188,7 @@ public class GUI extends Application {
                     // Se crea un lapso de tiempo para que el usuario vea las imágenes antes de cubrirlas cubrir ambas images
                     executorService.schedule(Table::coverAllImageNoPair, 500, TimeUnit.MILLISECONDS);
                 }
-                // pone contador de clicks de la clase table en 0
+                // pone contador de clics de la clase table en 0
                 table.setCounterClick(0);
             }
             // Verifica si todas las images han sido descubiertas
