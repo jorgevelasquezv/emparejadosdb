@@ -70,7 +70,6 @@ public class GUI extends Application {
         ObservableList<String> listLevel = FXCollections.observableArrayList("Nivel 1", "Nivel 2", "Nivel 3");
         selectLevel.setItems(listLevel);
 
-//        selectLevel.getEditor().setFont(Font.font("Britannic Bold", 20));
         selectLevel.setStyle("-fx-font: 20px \"Britannic Bold\";");
 
         Button play = new Button("Jugar");
@@ -128,7 +127,7 @@ public class GUI extends Application {
 
 
     // Ventana Emergente
-    private void modalFinalPlay(Stage primaryStage){
+    private void modalFinalPlay(){
         Stage stage = new Stage();
         FlowPane pane = new FlowPane(Orientation.VERTICAL);
         pane.setPadding(new Insets(11, 12, 13, 14));
@@ -175,7 +174,7 @@ public class GUI extends Application {
             List<Sheet> sheetsUncover = table.getSheetList().stream().filter(sheet -> !sheet.isCover() && !sheet.isPair()).collect(Collectors.toList());
             // Si el contador de clicks de la clase table es 0
             if (table.getCounterClick() == 0) {
-                // pone en uno contador de clicks de la clase table
+                // pone en uno contador de clics de la clase table
                 table.setCounterClick(1);
                 // Si el número de elementos de la lista de imágenes descubiertas es mayor a uno
             } else if (sheetsUncover.size() > 1) {
@@ -196,7 +195,7 @@ public class GUI extends Application {
             // Verifica si todas las images han sido descubiertas
             if (table.isAllSheetsPairs()) {
                 executorService.schedule(Table::coverAllImage, 500, TimeUnit.MILLISECONDS);
-                modalFinalPlay(primaryStage);
+                modalFinalPlay();
             }
         };
     }
