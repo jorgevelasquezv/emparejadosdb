@@ -1,7 +1,7 @@
 package co.com.jorge.model;
 
 /**
- * Representación de la lista de contantes que representan los niveles preestablecidos del juego
+ * Representación de la lista de constantes que representan los niveles preestablecidos del juego
  */
 
 public enum Level {

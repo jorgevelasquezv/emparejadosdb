@@ -32,18 +32,18 @@ public class Table {
     /**
      * Lista de objetos de la clase Sheet
      */
-    private static List<Sheet> sheetList = new ArrayList<>();
+    private static List<Sheet> sheetList;
 
     /**
      * Lista de números parejas según el producto de filas y columnas
      */
-    private List<String> coupleNumbers = new ArrayList<>();
+    private final List<String> coupleNumbers;
 
     /**
      * generador de números aleatorios según el producto de filas y columnas, para asignar posiciones aleatorias
      * a las imágenes cada vez que se crea un tablero nuevo
      */
-    private Random randomGenerator = new Random();
+    private final Random randomGenerator;
 
     /**
      * Número de cuadrículas del tablero
@@ -52,13 +52,14 @@ public class Table {
 
     /**
      * Constructor de la clase Table
-     * @param rows número de filas del tablero
-     * @param columns número de columnas del tablero
+     * @param level enumeración que determina número de filas y columnas
      */
-    public Table(int rows, int columns) {
-        this.rows = rows;
-        this.columns = columns;
+    public Table(Level level) {
+        this.rows = level.getRows();
+        this.columns = level.getColumns();
         this.boxes = rows * columns;
+        this.randomGenerator = new Random();
+        this.coupleNumbers = new ArrayList<>();
         prepararRandom();
         loadSheets();
     }
@@ -68,6 +69,7 @@ public class Table {
      * Carga las imágenes en cada objeto de la clase Sheet
      */
     public void loadSheets() {
+        sheetList = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 int type = randomNumero();
@@ -133,26 +135,10 @@ public class Table {
     }
 
     /**
-     * Modifica el número de filas del tablero
-     * @param rows número de filas del tablero
-     */
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
-    /**
      * @return retorna el número de columnas del tablero
      */
     public int getColumns() {
         return columns;
-    }
-
-    /**
-     * Modifica el número de columnas del tablero
-     * @param columns número de columnas del tablero
-     */
-    public void setColumns(int columns) {
-        this.columns = columns;
     }
 
     /**
@@ -170,14 +156,6 @@ public class Table {
     }
 
     /**
-     * Modifica la lista de objetos de la clase Sheet
-     * @param sheetList lista de objetos creados de la clase Sheet
-     */
-    public void setSheetList(List<Sheet> sheetList) {
-        this.sheetList = sheetList;
-    }
-
-    /**
      * @return contador de clics efectuados sobre el tablero
      */
     public int getCounterClick() {
@@ -191,6 +169,5 @@ public class Table {
     public void setCounterClick(int counterClick) {
         this.counterClick = counterClick;
     }
-
 
 }

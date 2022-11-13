@@ -17,13 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -33,15 +29,23 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class GUI extends Application {
-    private int rows = 4, columns = 3;
+//    private int rows = 4, columns = 3;
 
-    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private Stage stage;
+
+    private Table table;
+
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.stage = primaryStage;
+        this.stage.setTitle("Emparejados DB");
+        this.stage.setResizable(false);
+        this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/icon.png")));
 
         // Primera vista
-        firstWindow(primaryStage);
+        firstWindow();
     }
 
     @Override
@@ -54,7 +58,7 @@ public class GUI extends Application {
     }
 
     // Primera ventana
-    private void firstWindow(Stage primaryStage){
+    private void firstWindow(){
         VBox paneOne = new VBox();
         paneOne.setPadding(new Insets(10));
 
@@ -88,85 +92,89 @@ public class GUI extends Application {
 
         paneOne.getChildren().addAll(logo, paneTwo);
 
-        play.addEventHandler(MouseEvent.MOUSE_CLICKED, handleOnClickPlay(selectLevel, primaryStage));
+        play.addEventHandler(MouseEvent.MOUSE_CLICKED, handleOnClickPlay(selectLevel));
 
         Scene scene = new Scene(paneOne);
-        primaryStage.setTitle("Emparejados DB");
-        primaryStage.setScene(scene);
+        stage.setScene(scene);
 
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/icon.png")));
-
-        primaryStage.show();
+        stage.show();
     }
 
     // Segunda ventana
-    private void secondWindow(Stage primaryStage){
+    private void secondWindow(){
         TilePane paneTwo = new TilePane();
         paneTwo.setAlignment(Pos.CENTER);
         paneTwo.setPadding(new Insets(12, 12, 12, 12));
         paneTwo.setHgap(5);
         paneTwo.setVgap(5);
-        if(columns == rows){
-            paneTwo.setMaxWidth(columns * 160); // Nivel 2
+        if(table.getColumns() == table.getRows()){
+            paneTwo.setMaxWidth(table.getColumns() * 160); // Nivel 2
         }else {
-            paneTwo.setMaxWidth(columns * 200); // Nivel 1 y 3
+            paneTwo.setMaxWidth(table.getColumns() * 200); // Nivel 1 y 3
         }
-
-        Table table = new Table(rows, columns);
 
         table.getSheetList().forEach(sheet -> paneTwo.getChildren().add(sheet.getImage()));
 
-        paneTwo.addEventHandler(MouseEvent.MOUSE_CLICKED, handlerOnClickPane(table, primaryStage));
+        paneTwo.addEventHandler(MouseEvent.MOUSE_CLICKED, handlerOnClickPane(table, stage));
 
         Scene scene = new Scene(paneTwo);
-        primaryStage.setTitle("Emparejados DB");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 
     // Ventana Emergente
     private void modalFinalPlay(){
-        Stage stage = new Stage();
         FlowPane pane = new FlowPane(Orientation.VERTICAL);
-        pane.setPadding(new Insets(11, 12, 13, 14));
-        pane.setHgap(5);
-        pane.setVgap(5);
-        pane.getChildren().addAll(new Label("Desea Continuar Jugando"));
-        pane.getChildren().addAll(new Button("Continuar"));
-        pane.getChildren().addAll(new Button("Salir"));
-        Scene scene = new Scene(pane, 200, 200);
-        stage.setTitle("FlowPane");
-        stage.initModality(Modality.APPLICATION_MODAL);
+        pane.setPadding(new Insets(50, 10, 13, 70));
+        pane.setHgap(15);
+        pane.setVgap(15);
+
+        Label label = new Label("¿Desea Continuar Jugando?");
+        label.setStyle("-fx-font: 15px \"Britannic Bold\";");
+//        label.setLayoutX(200);
+//        label.setLayoutY(58);
+
+        HBox hBox = new HBox();
+        Button resume = new Button("Continuar");
+        resume.setPrefSize(80, 15);
+        resume.addEventHandler(MouseEvent.MOUSE_CLICKED, handleOnClickButtonWindowModal(stage));
+        Button leave = new Button("Salir");
+        leave.setPrefSize(80, 15);
+        leave.addEventHandler(MouseEvent.MOUSE_CLICKED, handleOnClickButtonWindowModal(stage));
+        hBox.getChildren().addAll(resume, leave);
+        hBox.setPadding(new Insets(40, 10, 0, 0));
+        hBox.setSpacing(25);
+
+        pane.getChildren().addAll(label, hBox);
+        Scene scene = new Scene(pane,300, 200);
         stage.setScene(scene);
-        stage.showAndWait();
+        stage.show();
     }
 
     // Evento del botón Jugar
-    private EventHandler<MouseEvent> handleOnClickPlay(ComboBox<String> selectLevel, Stage primaryStage) {
+    private EventHandler<MouseEvent> handleOnClickPlay(ComboBox<String> selectLevel) {
         return (MouseEvent event) -> {
             switch (selectLevel.getValue()) {
                 case "Nivel 1":
-                    rows = Level.LEVEL1.getRows();
-                    columns = Level.LEVEL1.getColumns();
+                    table = new Table(Level.LEVEL1);
                     break;
                 case "Nivel 2":
-                    rows = Level.LEVEL2.getRows();
-                    columns = Level.LEVEL2.getColumns();
+                    table = new Table(Level.LEVEL2);
                     break;
                 case "Nivel 3":
-                    rows = Level.LEVEL3.getRows();
-                    columns = Level.LEVEL3.getColumns();
+                    table = new Table(Level.LEVEL3);
                     break;
             }
-            secondWindow(primaryStage);
+            stage.close();
+            secondWindow();
         };
     }
 
 
     // Evento de click del mouse para objeto pane de la clase TilePane
-    private EventHandler<MouseEvent> handlerOnClickPane(Table table, Stage primaryStage) {
+    private EventHandler<MouseEvent> handlerOnClickPane(Table table, Stage stage) {
 
         return (MouseEvent event) -> {
             // Obtiene lista de fichas que están descubiertas y que no han sido emparejadas
@@ -194,7 +202,21 @@ public class GUI extends Application {
             // Verifica si todas las images han sido descubiertas
             if (table.isAllSheetsPairs()) {
                 executorService.schedule(Table::coverAllImage, 500, TimeUnit.MILLISECONDS);
+                stage.close();
                 modalFinalPlay();
+            }
+        };
+    }
+
+    // Evento del click para venta modal
+    private EventHandler<MouseEvent> handleOnClickButtonWindowModal(Stage stage){
+        return (MouseEvent event) -> {
+            String buttonPressed = event.getSource().toString();
+            if (buttonPressed.contains("Continuar")){
+                stage.close();
+                firstWindow();
+            } else if (buttonPressed.contains("Salir")) {
+                stage.close();
             }
         };
     }
