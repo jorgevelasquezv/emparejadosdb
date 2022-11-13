@@ -1,73 +1,119 @@
 package co.com.jorge.model;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Clase Table, representa el tablero con número de filas y columnas establecidas al realizar una instancia de la clase,
+ * en el cual se alojan los objetos de la clase sheet, los cuales almacenan las imágenes
+ */
+
 public class Table {
 
-    private int rows;
+    /**
+     * Número de filas
+     */
+    private final int rows;
 
-    private int columns;
+    /**
+     * Número de columnas
+     */
+    private final int columns;
 
+    /**
+     * Contador de clics efectuados sobre el tablero
+     */
     private int counterClick;
 
-    private static List<Sheet> sheetList = new ArrayList<>();
+    /**
+     * Lista de objetos de la clase Sheet
+     */
+    private static List<Sheet> sheetList;
 
-    private List<String> number = new ArrayList<>();
+    /**
+     * Lista de números parejas según el producto de filas y columnas
+     */
+    private final List<String> coupleNumbers;
 
-    private Random randomGenerator = new Random();
+    /**
+     * generador de números aleatorios según el producto de filas y columnas, para asignar posiciones aleatorias
+     * a las imágenes cada vez que se crea un tablero nuevo
+     */
+    private final Random randomGenerator;
 
+    /**
+     * Número de cuadrículas del tablero
+     */
     private int boxes;
 
-    public Table(int rows, int columns) {
-        this.rows = rows;
-        this.columns = columns;
+    /**
+     * Constructor de la clase Table, obtiene número de filas y columnas, determina el número de cuadrículas,
+     * instancia el generador aleatorio de la clase Random, Instancia la lista de parejas de números para ser asignados
+     * a cada objeto de la clase Sheet
+     * @param level enumeración que determina número de filas y columnas
+     */
+    public Table(Level level) {
+        this.rows = level.getRows();
+        this.columns = level.getColumns();
         this.boxes = rows * columns;
+        this.randomGenerator = new Random();
+        this.coupleNumbers = new ArrayList<>();
         prepararRandom();
         loadSheets();
     }
 
+    /**
+     * Crea tantos objetos de la clase Sheet como columnas y filas haya, y los adiciona al atributo sheetList,
+     * Carga las imágenes en cada objeto de la clase Sheet
+     */
     public void loadSheets() {
+        sheetList = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 int type = randomNumero();
-                ImageView view = new ImageView(new Image(getClass().getResourceAsStream("/img/img" + type + ".jpg")));
-                view.setId("img"+ type);
-                view.setFitHeight(125);
-                view.setFitWidth(125);
-                Sheet sheet = new Sheet(view);
+                Sheet sheet = new Sheet(type);
                 sheetList.add(sheet);
             }
         }
     }
 
-    // Llena la lista number con parejas de números según la mitad de la cantidad de filas por columnas
+    /**
+     * Llena la lista coupleNumbers con parejas de números según la mitad del producto de filas y columnas
+     */
     public void prepararRandom() {
         for (int i = 0; i < (rows * columns / 2); i++) {
-            number.add(String.valueOf(i + 1));
-            number.add(String.valueOf(i + 1));
+            coupleNumbers.add(String.valueOf(i + 1));
+            coupleNumbers.add(String.valueOf(i + 1));
         }
     }
 
+    /**
+     * Método que retorna el número de filas del tablero
+     * @return Devuelve el número de filas del tablero
+     */
     public int getRows() {
         return rows;
     }
 
-    // Retorna un número comprendido entre la mitad de la cantidad de filas por columnas contenido en lista "number"
-    // y elimina este elemento de la lista.
+    /**
+     * Método que retorna un número comprendido en el rango del producto de filas y columnas, contenido en lista
+     * "coupleNumbers" y elimina este elemento de la lista.
+     * @return Retorna un número comprendido en el rango del producto de filas y columnas, contenido en lista
+     * "coupleNumbers" y elimina este elemento de la lista.
+     */
     public int randomNumero() {
         int retorno, random;
         random = randomGenerator.nextInt(boxes);
-        retorno = Integer.parseInt(number.get(random));
-        number.remove(random);
+        retorno = Integer.parseInt(coupleNumbers.get(random));
+        coupleNumbers.remove(random);
         boxes -= 1;
         return retorno;
     }
 
+    /**
+     * Cubre todas las imágenes de las fichas con una imagen en blanco
+     */
     public static void coverAllImage() {
         sheetList.forEach(sheet -> {
             sheet.setCover(true);
@@ -75,6 +121,9 @@ public class Table {
         });
     }
 
+    /**
+     * Cubre las imágenes de las fichas que no han sido marcadas como par
+     */
     public static void coverAllImageNoPair(){
         sheetList.forEach(sheet -> {
             if (!sheet.isPair() && !sheet.isCover()) {
@@ -83,41 +132,45 @@ public class Table {
         });
     }
 
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
+    /**
+     * Método que retorna el número de columnas del tablero
+     * @return Retorna el número de columnas del tablero
+     */
     public int getColumns() {
         return columns;
     }
 
-    public void setColumns(int columns) {
-        this.columns = columns;
-    }
-
+    /**
+     * Método que retorna una lista con todos los objetos construidos de la clase Sheet
+     * @return retorna una lista con todos los objetos construidos de la clase Sheet
+     */
     public List<Sheet> getSheetList() {
         return sheetList;
     }
 
+    /**
+     * Método que permite determinar si todos los objetos de la clase Sheet han sido descubiertos, por lo tanto,
+     * marcados como pares
+     * @return retorna true si todas las fichas han sido marcadas como pares de lo contrario retorna false
+     */
     public boolean isAllSheetsPairs(){
-        if (sheetList.stream().allMatch(Sheet::isPair))
-        {
-            return true;
-        }
-        return false;
+        return sheetList.stream().allMatch(Sheet::isPair);
     }
 
-    public void setSheetList(List<Sheet> sheetList) {
-        this.sheetList = sheetList;
-    }
-
+    /**
+     * Método que retorna contador de clics efectuados sobre el tablero
+     * @return Retorna contador de clics efectuados sobre el tablero
+     */
     public int getCounterClick() {
         return counterClick;
     }
 
+    /**
+     * Modifica el contador de clics efectuados sobre el tablero
+     * @param counterClick contador de clics efectuados sobre el tablero
+     */
     public void setCounterClick(int counterClick) {
         this.counterClick = counterClick;
     }
-
 
 }
