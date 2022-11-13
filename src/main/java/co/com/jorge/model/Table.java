@@ -34,7 +34,7 @@ public class Table {
     /**
      * Lista de números parejas según el producto de filas y columnas
      */
-    private final List<String> coupleNumbers;
+    private final List<Integer> coupleNumbers;
 
     /**
      * generador de números aleatorios según el producto de filas y columnas, para asignar posiciones aleatorias
@@ -59,7 +59,7 @@ public class Table {
         this.boxes = rows * columns;
         this.randomGenerator = new Random();
         this.coupleNumbers = new ArrayList<>();
-        prepararRandom();
+        readyRandom();
         loadSheets();
     }
 
@@ -71,7 +71,7 @@ public class Table {
         sheetList = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                int type = randomNumero();
+                int type = randomNumber();
                 Sheet sheet = new Sheet(type);
                 sheetList.add(sheet);
             }
@@ -81,10 +81,12 @@ public class Table {
     /**
      * Llena la lista coupleNumbers con parejas de números según la mitad del producto de filas y columnas
      */
-    public void prepararRandom() {
+    public void readyRandom() {
         for (int i = 0; i < (rows * columns / 2); i++) {
-            coupleNumbers.add(String.valueOf(i + 1));
-            coupleNumbers.add(String.valueOf(i + 1));
+//            coupleNumbers.add(String.valueOf(i + 1));
+            coupleNumbers.add(i + 1);
+//            coupleNumbers.add(String.valueOf(i + 1));
+            coupleNumbers.add(i + 1);
         }
     }
 
@@ -102,10 +104,11 @@ public class Table {
      * @return Retorna un número comprendido en el rango del producto de filas y columnas, contenido en lista
      * "coupleNumbers" y elimina este elemento de la lista.
      */
-    public int randomNumero() {
+    public int randomNumber() {
         int retorno, random;
         random = randomGenerator.nextInt(boxes);
-        retorno = Integer.parseInt(coupleNumbers.get(random));
+//        retorno = Integer.parseInt(coupleNumbers.get(random));
+        retorno = coupleNumbers.get(random);
         coupleNumbers.remove(random);
         boxes -= 1;
         return retorno;
@@ -146,6 +149,15 @@ public class Table {
      */
     public List<Sheet> getSheetList() {
         return sheetList;
+    }
+
+
+    /**
+     * Método que devuelve la lista de números pareja en el rango del producto de filas y columnas
+     * @return Retorna lista de números pareja en el rango del producto de filas y columnas
+     */
+    public List<Integer> getCoupleNumbers() {
+        return coupleNumbers;
     }
 
     /**
