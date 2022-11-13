@@ -1,36 +1,49 @@
 package co.com.jorge.model;
 
-import junit.framework.TestCase;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class SheetTest extends TestCase {
+import static org.junit.Assert.*;
 
-    public void testCoverImage() {
+public class SheetTest {
+
+    Sheet sheet = new Sheet(1);
+
+    @Test
+    public void cover_image() {
+        sheet.coverImage();
+        assertTrue(sheet.isCover());
     }
 
-    public void testUncoverImage() {
+    @Test
+    public void uncover_image() {
+        sheet.uncoverImage();
+        assertFalse(sheet.isCover());
     }
 
-    public void testGetImage() {
+    @Test
+    public void two_sheet_are_equals() {
+        Sheet sheetTwo = new Sheet(1);
+        assertTrue(sheet.equals(sheetTwo));
     }
 
-    public void testSetImage() {
+    @Test
+    public void two_sheet_are_not_equals() {
+        Sheet sheetTwo = new Sheet(2);
+        assertFalse(sheet.equals(sheetTwo));
     }
 
-    public void testGetId() {
+    @Test
+    public void sheet_is_pair() {
+        sheet.setPair(true);
+        assertTrue(sheet.isPair());
     }
 
-    public void testIsCover() {
-    }
-
-    public void testSetCover() {
-    }
-
-    public void testIsPair() {
-    }
-
-    public void testSetPair() {
-    }
-
-    public void testTestEquals() {
+    @Test
+    public void sheet_not_is_pair() {
+        sheet.setPair(false);
+        assertFalse(sheet.isPair());
     }
 }

@@ -40,9 +40,12 @@ public class Sheet {
      * Constructor con parámetro image de  la clase ImageView
      * @param image Imagen a cargar en el objeto de la clase Sheet
      */
-    public Sheet(ImageView image) {
+    public Sheet(int type) {
         this.id = generateId++;
-        this.image = image;
+        this.image = new ImageView(new Image(getClass().getResourceAsStream("/img/img" + type + ".jpg")));
+        this.image.setId("img"+ type);
+        this.image.setFitHeight(125);
+        this.image.setFitWidth(125);
         coverImage();
         this.image.addEventHandler(MouseEvent.MOUSE_CLICKED, setHandler());
     }

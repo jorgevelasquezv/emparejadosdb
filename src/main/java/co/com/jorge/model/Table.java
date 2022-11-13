@@ -1,8 +1,5 @@
 package co.com.jorge.model;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -75,11 +72,7 @@ public class Table {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 int type = randomNumero();
-                ImageView view = new ImageView(new Image(getClass().getResourceAsStream("/img/img" + type + ".jpg")));
-                view.setId("img"+ type);
-                view.setFitHeight(125);
-                view.setFitWidth(125);
-                Sheet sheet = new Sheet(view);
+                Sheet sheet = new Sheet(type);
                 sheetList.add(sheet);
             }
         }

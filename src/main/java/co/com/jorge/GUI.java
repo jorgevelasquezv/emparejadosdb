@@ -28,6 +28,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static co.com.jorge.model.Level.*;
+
 public class GUI extends Application {
 
     private Stage stage;
@@ -52,7 +54,7 @@ public class GUI extends Application {
         executorService.shutdown();
     }
 
-    public static void main(String[] args) {
+    public static void runApp(String[] args) {
         Application.launch(args);
     }
 
@@ -155,13 +157,13 @@ public class GUI extends Application {
         return (MouseEvent event) -> {
             switch (selectLevel.getValue()) {
                 case "Nivel 1":
-                    table = new Table(Level.LEVEL1);
+                    table = new Table(LEVEL1);
                     break;
                 case "Nivel 2":
-                    table = new Table(Level.LEVEL2);
+                    table = new Table(LEVEL2);
                     break;
                 case "Nivel 3":
-                    table = new Table(Level.LEVEL3);
+                    table = new Table(LEVEL3);
                     break;
             }
             stage.close();
