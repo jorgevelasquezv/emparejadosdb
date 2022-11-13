@@ -37,13 +37,6 @@ public class Sheet {
     public static int generateId = 0;
 
     /**
-     * Constructor vacío de la clase Sheet
-     */
-    public Sheet() {
-        this.id = generateId++;
-    }
-
-    /**
      * Constructor con parámetro image de  la clase ImageView
      * @param image Imagen a cargar en el objeto de la clase Sheet
      */
@@ -74,6 +67,7 @@ public class Sheet {
     }
 
     /**
+     * Evento del mouse para detectar click
      * @return Retorna un evento para el clic del mouse que invoca a los métodos de cubrir o descubrir imagen según
      * el estado de la imagen
      */
@@ -88,6 +82,7 @@ public class Sheet {
     }
 
     /**
+     * Método que retorna el objeto de la clase ImageView contenido en el objeto de la clase Sheet el cual contiene
      * @return Retorna el objeto de la clase ImageView contenido en el objeto de la clase Sheet el cual contiene
      * la imagen
      */
@@ -96,6 +91,7 @@ public class Sheet {
     }
 
     /**
+     * Modifica el atributo image cargando un objeto de la clase ImageView
      * @param image Carga un objeto de la clase ImageView en el atributo image del objeto de la clase Sheet
      */
     public void setImage(ImageView image) {
@@ -103,13 +99,15 @@ public class Sheet {
     }
 
     /**
-     * @return Retorna el ID unico del objeto de la clase Sheet
+     * Método que retorna el valor del ID único de cada objeto de la clase Sheet
+     * @return Retorna el ID único del objeto de la clase Sheet
      */
     public int getId() {
         return id;
     }
 
     /**
+     * Método para determinar si una imagen esta cubierta
      * @return retorna true si la imagen se encuentra cubierta y false si está se encuentra descubierta
      */
     public boolean isCover() {
@@ -123,10 +121,11 @@ public class Sheet {
      */
     public void setCover(boolean cover) {
         image.setImage(new Image (getClass().getResourceAsStream("/img/img0.jpg")));
-        this.cover = true;
+        this.cover = cover;
     }
 
     /**
+     * Método que determina si una dos objetos con la igual imagen han sido descubiertos
      * @return Retorna el estado del objeto de la clase Sheet, que representa si la imagen semejante ha sido descubierta
      */
     public boolean isPair() {
@@ -143,8 +142,8 @@ public class Sheet {
     }
 
     /**
-     * @param o Compara el objeto de la clase Sheet con otro objeto de la misma clase para determinar si poseen
-     *          imágenes semejantes
+     * Método para comparar con otro objeto de la clase Sheet y determinar si poseen imágenes semejantes
+     * @param o Objeto de la clase SSheet con el cual se desea comparar
      * @return retorna true si ambos objetos contiene la misma imagen y false de no ser asi
      */
     @Override

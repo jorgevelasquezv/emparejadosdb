@@ -17,12 +17,12 @@ public class Table {
     /**
      * Número de filas
      */
-    private int rows;
+    private final int rows;
 
     /**
      * Número de columnas
      */
-    private int columns;
+    private final int columns;
 
     /**
      * Contador de clics efectuados sobre el tablero
@@ -51,7 +51,9 @@ public class Table {
     private int boxes;
 
     /**
-     * Constructor de la clase Table
+     * Constructor de la clase Table, obtiene número de filas y columnas, determina el número de cuadrículas,
+     * instancia el generador aleatorio de la clase Random, Instancia la lista de parejas de números para ser asignados
+     * a cada objeto de la clase Sheet
      * @param level enumeración que determina número de filas y columnas
      */
     public Table(Level level) {
@@ -94,6 +96,7 @@ public class Table {
     }
 
     /**
+     * Método que retorna el número de filas del tablero
      * @return Devuelve el número de filas del tablero
      */
     public int getRows() {
@@ -101,6 +104,8 @@ public class Table {
     }
 
     /**
+     * Método que retorna un número comprendido en el rango del producto de filas y columnas, contenido en lista
+     * "coupleNumbers" y elimina este elemento de la lista.
      * @return Retorna un número comprendido en el rango del producto de filas y columnas, contenido en lista
      * "coupleNumbers" y elimina este elemento de la lista.
      */
@@ -135,13 +140,15 @@ public class Table {
     }
 
     /**
-     * @return retorna el número de columnas del tablero
+     * Método que retorna el número de columnas del tablero
+     * @return Retorna el número de columnas del tablero
      */
     public int getColumns() {
         return columns;
     }
 
     /**
+     * Método que retorna una lista con todos los objetos construidos de la clase Sheet
      * @return retorna una lista con todos los objetos construidos de la clase Sheet
      */
     public List<Sheet> getSheetList() {
@@ -149,6 +156,8 @@ public class Table {
     }
 
     /**
+     * Método que permite determinar si todos los objetos de la clase Sheet han sido descubiertos, por lo tanto,
+     * marcados como pares
      * @return retorna true si todas las fichas han sido marcadas como pares de lo contrario retorna false
      */
     public boolean isAllSheetsPairs(){
@@ -156,7 +165,8 @@ public class Table {
     }
 
     /**
-     * @return contador de clics efectuados sobre el tablero
+     * Método que retorna contador de clics efectuados sobre el tablero
+     * @return Retorna contador de clics efectuados sobre el tablero
      */
     public int getCounterClick() {
         return counterClick;

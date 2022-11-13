@@ -1,15 +1,25 @@
 package co.com.jorge.model;
 
 /**
- * Representación de la lista de constantes que representan los niveles preestablecidos del juego
+ * Representación de la lista de constantes que permite conocer los niveles preestablecidos del juego
  */
 
 public enum Level {
 
     /**
-     * Niveles predefinidos por filas y columnas
+     * Nivel 1 predefinido para 4 filas y 3 columnas
      */
-    LEVEL1(4,3), LEVEL2(4,4), LEVEL3(5,4);
+    LEVEL1(4,3),
+
+    /**
+     * Nivel 2 predefinido para 4 filas y 4 columnas
+     */
+    LEVEL2(4,4),
+
+    /**
+     * Nivel 3 predefinido para 5 filas y 4 columnas
+     */
+    LEVEL3(5,4);
 
     /**
      * Número de filas
@@ -32,6 +42,7 @@ public enum Level {
     }
 
     /**
+     * Método que permite obtener el valor del número de filas
      * @return Retorna el número de filas
      */
     public int getRows() {
@@ -39,6 +50,7 @@ public enum Level {
     }
 
     /**
+     * Método que permite obtener el valor del número de columnas
      * @return Retorna el número de columnas
      */
     public int getColumns() {

@@ -29,7 +29,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class GUI extends Application {
-//    private int rows = 4, columns = 3;
 
     private Stage stage;
 
@@ -133,8 +132,6 @@ public class GUI extends Application {
 
         Label label = new Label("¿Desea Continuar Jugando?");
         label.setStyle("-fx-font: 15px \"Britannic Bold\";");
-//        label.setLayoutX(200);
-//        label.setLayoutY(58);
 
         HBox hBox = new HBox();
         Button resume = new Button("Continuar");
