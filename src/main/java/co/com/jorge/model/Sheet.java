@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.util.Objects;
+
 /**
  * Clase Sheet, representa cada cuadrícula dentro del tablero, en la cual va almacenada la imagen y responde al evento
  * del clic para mostrar u ocultar las imágenes
@@ -37,12 +39,14 @@ public class Sheet {
     public static int generateId = 0;
 
     /**
-     * Constructor con parámetro image de  la clase ImageView
-     * @param image Imagen a cargar en el objeto de la clase Sheet
+     * Constructor con parámetro int type que permite crear una instancia con argumento image de la clase
+     * ImageView definido
+     * @param type define el número de la imagen que se cargara en el objeto de la clase ImageView, que se asigna al
+     *             objeto de la clase Sheet
      */
     public Sheet(int type) {
         this.id = generateId++;
-        this.image = new ImageView(new Image(getClass().getResourceAsStream("/img/img" + type + ".jpg")));
+        this.image = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/img" + type + ".jpg"))));
         this.image.setId("img"+ type);
         this.image.setFitHeight(125);
         this.image.setFitWidth(125);
@@ -56,7 +60,7 @@ public class Sheet {
      */
     public void coverImage(){
         if(!isPair()){
-            image.setImage(new Image (getClass().getResourceAsStream("/img/img0.jpg")));
+            image.setImage(new Image (Objects.requireNonNull(getClass().getResourceAsStream("/img/img0.jpg"))));
             this.cover = true;
         }
     }
@@ -65,7 +69,7 @@ public class Sheet {
      * Muestra o descubre la imagen del objeto de la clase Sheet
      */
     public void uncoverImage(){
-        image.setImage(new Image (getClass().getResourceAsStream("/img/" + image.getId() + ".jpg")));
+        image.setImage(new Image (Objects.requireNonNull(getClass().getResourceAsStream("/img/" + image.getId() + ".jpg"))));
         this.cover = false;
     }
 
@@ -123,7 +127,7 @@ public class Sheet {
      *              cubierta o descubierta
      */
     public void setCover(boolean cover) {
-        image.setImage(new Image (getClass().getResourceAsStream("/img/img0.jpg")));
+        image.setImage(new Image (Objects.requireNonNull(getClass().getResourceAsStream("/img/img0.jpg"))));
         this.cover = cover;
     }
 

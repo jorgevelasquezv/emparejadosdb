@@ -7,17 +7,17 @@ package co.com.jorge.model;
 public enum Level {
 
     /**
-     * Nivel 1 predefinido para 4 filas y 3 columnas
+     * Nivel 1, predefinido para 4 filas y 3 columnas
      */
     LEVEL1(4,3),
 
     /**
-     * Nivel 2 predefinido para 4 filas y 4 columnas
+     * Nivel 2, predefinido para 4 filas y 4 columnas
      */
     LEVEL2(4,4),
 
     /**
-     * Nivel 3 predefinido para 5 filas y 4 columnas
+     * Nivel 3, predefinido para 5 filas y 4 columnas
      */
     LEVEL3(5,4);
 
